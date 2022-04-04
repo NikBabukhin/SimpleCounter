@@ -1,8 +1,7 @@
 .error__span {
-    position: absolute;
     font-size: 15px;
     font-weight: 900;
-    color: red;
+    color: #cc4343b8;
     text-transform: uppercase;
     position: absolute;
     top: 50%;

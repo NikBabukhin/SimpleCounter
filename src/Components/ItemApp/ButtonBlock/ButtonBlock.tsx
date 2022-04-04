@@ -7,10 +7,12 @@ type ButtonBlockPropsType = {
     resetCounter: () => void;
     currentCounter:number;
     maxValue: number;
-    startValue: number
+    startValue: number,
+    isDisableNow: boolean,
 }
 
 export const ButtonBlock: React.FC<ButtonBlockPropsType> = (props) => {
+
 
     return (
         <div className={s.wrapper}>
@@ -18,13 +20,13 @@ export const ButtonBlock: React.FC<ButtonBlockPropsType> = (props) => {
                 extraClass={'add__button'}
                 onClickHandler={()=>props.plusCounter(1)}
                 name={'Plus'}
-                isDisabled={props.currentCounter===props.maxValue}
+                isDisabled={props.currentCounter===props.maxValue || props.isDisableNow}
             />
 
             <Button
                 onClickHandler={props.resetCounter}
                 name={'Reset'}
-                isDisabled={props.currentCounter===props.startValue}
+                isDisabled={props.currentCounter===props.startValue || props.isDisableNow}
             />
         </div>
     )

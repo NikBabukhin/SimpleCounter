@@ -7,24 +7,26 @@ import {ErrorMessage} from "../../ErrorMessage/ErrorMessage";
 export type DisplaySetterPropsType = {
     startValue: number,
     maxValue: number,
-    currentMaxValue: number,
-    currentMinValue: number,
-    onChangerMinValue: (currentValue: number) => void,
-    onChangerMaxValue: (currentValue: number) => void,
+    setStartValue: (value: number) => void,
+    setMaxValue: (value: number) => void,
     appearance: boolean,
 }
 
 
 export const DisplaySetter: React.FC<DisplaySetterPropsType> = (props) => {
-    let message = null;
 
-    if (props.currentMinValue < 0 && props.currentMinValue <= props.currentMaxValue) {
-        message = <ErrorMessage message={'Counter cannot process this value'}/>
-    } else if ((props.currentMinValue >= props.currentMaxValue) && props.currentMinValue >= 0) {
-        message = <ErrorMessage message={'Max value should be more than min value'}/>
-    } else if ((props.currentMinValue >= props.currentMaxValue) && props.currentMinValue < 0) {
-        message = <ErrorMessage message={'Are you serious?'}/>
+    const message = () => {
+        if (props.startValue < 0 && props.startValue <= props.maxValue) {
+            return <ErrorMessage message={'Counter cannot process this value'}/>
+        } else if ((props.startValue >= props.maxValue) && props.startValue >= 0) {
+            return <ErrorMessage message={'Max value should be more than min value'}/>
+        } else if ((props.startValue >= props.maxValue) && props.startValue < 0) {
+            return <ErrorMessage message={'Are you serious?'}/>
+        } else {
+            return
+        }
     }
+
 
     return (
         <div className={s.main__wrapper}>
@@ -32,24 +34,24 @@ export const DisplaySetter: React.FC<DisplaySetterPropsType> = (props) => {
                 <div className={s.input__wrapper}>
                     <span>Min Value:</span>
                     <Input
-                        setCurrentValue={props.onChangerMinValue}
+                        setCurrentValue={props.setStartValue}
                         currentValue={props.startValue}
                         errorInputClass={s.error}
                         classInput={s.input}
                         placeholder={'Min Value'}
-                        isError={(props.currentMinValue >= props.currentMaxValue) || props.currentMinValue < 0}
+                        isError={(props.startValue >= props.maxValue) || props.startValue < 0}
                     />
                 </div>
-                {message}
+                {message()}
                 <div className={s.input__wrapper}>
                     <span>Max Value:</span>
                     <Input
-                        setCurrentValue={props.onChangerMaxValue}
+                        setCurrentValue={props.setMaxValue}
                         currentValue={props.maxValue}
                         errorInputClass={s.error}
                         classInput={s.input}
                         placeholder={'Max Value'}
-                        isError={(props.currentMinValue >= props.currentMaxValue) || props.currentMinValue < 0}
+                        isError={(props.startValue >= props.maxValue) || props.startValue < 0}
                     />
                 </div>
             </div>

@@ -1,26 +1,25 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 
 type InputPropsType = {
+    currentValue: number,
+    setCurrentValue: (value: number) => void,
     classInput: string,
     errorInputClass?: string,
     placeholder: string,
     isError: boolean,
-    currentValue:number,
-    setCurrentValue:(value:number)=>void,
 }
 
-export const Input:React.FC<InputPropsType> = (props) => {
-    const [value, setValue] = useState<number>(props.currentValue);
+export const Input: React.FC<InputPropsType> = (props) => {
 
-    const onChangeHandler=(event:ChangeEvent<HTMLInputElement>)=> {
-        setValue(+event.currentTarget.value);
+    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         props.setCurrentValue(+event.currentTarget.value);
     }
+
 
     return (
         <input
             onChange={onChangeHandler}
-            value={value}
+            value={props.currentValue}
             className={`${props.classInput}  ${props.isError ? props.errorInputClass : ''}`}
             type={'number'}
             placeholder={props.placeholder}

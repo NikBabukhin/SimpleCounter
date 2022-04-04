@@ -51,7 +51,7 @@ export const DisplaySetter: React.FC<DisplaySetterPropsType> = (props) => {
                         errorInputClass={s.error}
                         classInput={s.input}
                         placeholder={'Max Value'}
-                        isError={(props.startValue >= props.maxValue) || props.startValue < 0}
+                        isError={(props.startValue >= props.maxValue) || props.maxValue < 0}
                     />
                 </div>
             </div>

@@ -9,7 +9,7 @@ function App() {
     const [startValue, setStartValue] = useState<number>(0);
     const [maxValue, setMaxValue] = useState<number>(8);
     const [counter, setCounter] = useState<number>(startValue);
-    const [isDisableNow, setIsDisableNow] = useState<boolean>(false)
+    const [isDisableNow, setIsDisableNow] = useState<boolean>(false);
 
 
     useEffect(() => {

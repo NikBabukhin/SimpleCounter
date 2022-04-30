@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {ItemAppCounter} from "./Components/ItemApp/ItemApp";
 import {ItemAppSetter} from "./Components/ItemAppSetter/ItemAppSetter";

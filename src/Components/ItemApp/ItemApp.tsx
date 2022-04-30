@@ -31,9 +31,6 @@ export const ItemAppCounter: React.FC<ItemAppPropsType> = (props) => {
         }
     }
 
-    console.log(props.startValue >= props.maxValue);
-    console.log(props.startValue<0);
-    console.log(props.maxValue<0);
 
     return (
         <div className='App__wrapper'>

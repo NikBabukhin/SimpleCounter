@@ -6,7 +6,7 @@ export type ActionIncType = {
     type: 'INC-COUNTER-VALUE',
 }
 export type ActionGetBaseValueType = {
-    type: 'GET-VALUE-FROM-LOCAL-STORAGE',
+    type: 'GET-BASE-VALUE',
     payload: {
         startValue: number,
     }
@@ -19,7 +19,7 @@ export const counterReducer = (state: initialStateType = initialState, action: A
             return {
                 ...state, value: state.value + 1
             }
-        case "GET-VALUE-FROM-LOCAL-STORAGE":
+        case "GET-BASE-VALUE":
             return {
                 ...state, value: action.payload.startValue
             }
@@ -31,7 +31,7 @@ export const incCounterAC = (): ActionIncType => ({
     type: 'INC-COUNTER-VALUE',
 })
 export const setBaseValueAC = (startValue: number) => ({
-    type: 'GET-VALUE-FROM-LOCAL-STORAGE',
+    type: 'GET-BASE-VALUE',
     payload: {
         startValue
     }

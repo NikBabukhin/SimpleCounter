@@ -5,57 +5,45 @@ import {ItemAppSetter} from "./Components/ItemAppSetter/ItemAppSetter";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./redux/store";
 import {incCounterAC, setBaseValueAC} from "./redux/counter-reducer";
-
+import {changeMaxValueAC, changeMinValueAC} from "./redux/changeValue-reducer";
 
 function App() {
-
+    //Local state
     const [isDisableNow, setIsDisableNow] = useState<boolean>(false);
 
+    //Selectors
     const startValue = useSelector<AppStateType, number>(state => state.rangeValue.minValue)
     const maxValue = useSelector<AppStateType, number>(state => state.rangeValue.maxValue)
     const counter = useSelector<AppStateType, number>(state => state.counter.value)
+    //Dispatch
+    const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
-
-    const incHandler = () => {
-        dispatch(incCounterAC())
-    }
-
-    const setStartValue=(num:number)=> {
-
-    }
-    const setMaxValue=(num:number)=> {
-
-    }
-
-    useEffect(() => {
-        let startValueLocal = localStorage.getItem('startValue');
-        let maxValueLocal = localStorage.getItem('maxValue');
-        if (startValueLocal && maxValueLocal) {
-            setStartValue(+startValueLocal)
-            setMaxValue(+maxValueLocal)
-            dispatch(setBaseValueAC(+startValueLocal));
-        }
-    }, [])
-
-    const plusCounter = () => {
-        if (counter < maxValue) {
-            incHandler();
-        }
-    }
-
+    //Use dispatch for counter value
     const resetCounter = () => {
         dispatch(setBaseValueAC(startValue));
     }
+    const plusCounter = () => {
+        if (counter < maxValue) {
+            dispatch(incCounterAC())
+        }
+    }
+    //Use dispatch for counter range
+    const setStartValue = (num: number) => {
+        dispatch(changeMinValueAC(num))
+    }
+    const setMaxValue = (num: number) => {
+        dispatch(changeMaxValueAC(num))
+    }
 
+    //Click handler
     const setButtonHandler = (minValue: number, maxValue: number) => {
         dispatch(setBaseValueAC(minValue));
         setMaxValue(maxValue);
         setStartValue(minValue);
-        localStorage.setItem('maxValue', JSON.stringify(maxValue));
-        localStorage.setItem('startValue', JSON.stringify(startValue));
     }
 
+
+    //Main return
     return (
         <div className="App">
             <ItemAppSetter
@@ -66,7 +54,6 @@ function App() {
                 setButtonCallBack={setButtonHandler}
                 setIsDisableNow={setIsDisableNow}
             />
-
             <ItemAppCounter
                 isDisableNow={isDisableNow}
                 startValue={startValue}

@@ -2,15 +2,31 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {ItemAppCounter} from "./Components/ItemApp/ItemApp";
 import {ItemAppSetter} from "./Components/ItemAppSetter/ItemAppSetter";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./redux/store";
+import {incCounterAC, setBaseValueAC} from "./redux/counter-reducer";
 
 
 function App() {
 
-    const [startValue, setStartValue] = useState<number>(0);
-    const [maxValue, setMaxValue] = useState<number>(8);
-    const [counter, setCounter] = useState<number>(startValue);
     const [isDisableNow, setIsDisableNow] = useState<boolean>(false);
 
+    const startValue = useSelector<AppStateType, number>(state => state.rangeValue.minValue)
+    const maxValue = useSelector<AppStateType, number>(state => state.rangeValue.maxValue)
+    const counter = useSelector<AppStateType, number>(state => state.counter.value)
+
+    const dispatch = useDispatch()
+
+    const incHandler = () => {
+        dispatch(incCounterAC())
+    }
+
+    const setStartValue=(num:number)=> {
+
+    }
+    const setMaxValue=(num:number)=> {
+
+    }
 
     useEffect(() => {
         let startValueLocal = localStorage.getItem('startValue');
@@ -18,22 +34,22 @@ function App() {
         if (startValueLocal && maxValueLocal) {
             setStartValue(+startValueLocal)
             setMaxValue(+maxValueLocal)
-            setCounter(+startValueLocal);
+            dispatch(setBaseValueAC(+startValueLocal));
         }
     }, [])
 
-    const plusCounter = (value: number) => {
+    const plusCounter = () => {
         if (counter < maxValue) {
-            setCounter(counter + value);
+            incHandler();
         }
     }
 
     const resetCounter = () => {
-        setCounter(startValue);
+        dispatch(setBaseValueAC(startValue));
     }
 
     const setButtonHandler = (minValue: number, maxValue: number) => {
-        setCounter(minValue);
+        dispatch(setBaseValueAC(minValue));
         setMaxValue(maxValue);
         setStartValue(minValue);
         localStorage.setItem('maxValue', JSON.stringify(maxValue));
